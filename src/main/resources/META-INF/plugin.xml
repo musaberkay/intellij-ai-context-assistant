@@ -3,11 +3,11 @@
     <name>AI Context Assistant</name>
     <vendor url="https://github.com/musaberkay">Musa Berkay Kocabasoglu</vendor>
     <description><![CDATA[
-        Explains selected code using Claude AI with full IDE context awareness.<br><br>
-        <b>Usage:</b> Select any code, then right-click → <i>Ask AI about This</i> (or press Ctrl+Alt+A).<br><br>
-        The plugin automatically includes the file name, language, and project name in the prompt,
-        so Claude answers with context specific to your codebase — not just the snippet in isolation.<br><br>
-        Set your Claude API key under <i>Settings → Tools → AI Context Assistant</i>.
+        A chat assistant inside IntelliJ IDEA powered by any OpenAI-compatible model
+        (Ollama, LM Studio, OpenAI, Groq) or the Claude API.<br><br>
+        <b>Usage:</b> Select code → right-click → <i>Ask AI about This</i> (Ctrl+Alt+A),
+        or type directly in the AI Assistant panel.<br><br>
+        Configure your provider and model under <i>Settings → Tools → AI Context Assistant</i>.
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
@@ -19,8 +19,9 @@
                     icon="AllIcons.Actions.Find"
                     factoryClass="com.mbk.aiassistant.toolwindow.AIToolWindowFactory"/>
 
-        <applicationService serviceImplementation="com.mbk.aiassistant.api.ClaudeClient"/>
         <applicationService serviceImplementation="com.mbk.aiassistant.settings.PluginSettings"/>
+
+        <projectService serviceImplementation="com.mbk.aiassistant.chat.ChatSessionManager"/>
 
         <applicationConfigurable
                 parentId="tools"
@@ -33,7 +34,7 @@
         <action id="com.mbk.aiassistant.AskAI"
                 class="com.mbk.aiassistant.actions.AskAIAction"
                 text="Ask AI about This"
-                description="Explain the selected code using Claude AI with IDE context">
+                description="Send selected code to the AI Assistant chat panel">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt A"/>
         </action>
