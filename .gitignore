@@ -6,3 +6,4 @@ out/
 .DS_Store
 local.properties
 .idea/ai-assistant/
+docs/
